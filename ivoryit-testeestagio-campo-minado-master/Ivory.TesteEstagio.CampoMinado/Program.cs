@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace Ivory.TesteEstagio.CampoMinado
 {
@@ -11,6 +12,24 @@ namespace Ivory.TesteEstagio.CampoMinado
             Console.WriteLine(campoMinado.Tabuleiro);
 
             // Realize sua codificação a partir deste ponto, boa sorte!
+
+            int statusJogo;
+
+            Jogadas jogada = new Jogadas();
+
+
+
+
+            do
+            {
+                Console.WriteLine("\nAgurdando a proxima jogada");
+
+                // gerar uma pausa entra cada cada jogada
+                Thread.Sleep(1000);
+
+                statusJogo = jogada.Jogada(campoMinado);
+
+            } while (statusJogo == 0);
 
         }
     }
