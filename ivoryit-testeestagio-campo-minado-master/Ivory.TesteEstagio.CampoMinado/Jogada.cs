@@ -4,12 +4,13 @@ using System.Text;
 
 namespace Ivory.TesteEstagio.CampoMinado
 {
-    class Jogadas
+    class Jogada
     {
-        // variavel para armazenar o tabuleiro em forma de matriz depois de tratado 
+        // Variavel para armazenar o tabuleiro em forma de matriz depois de tratado.
         private string[,] tabuleiro = new string[9, 9];
 
-        // metodo para tratar o tabuleiro que vem em formato de string e transformar em matriz
+
+        // Metodo para tratar o tabuleiro que vem em formato de string e transformar em matriz.
         public void SepararTabuleiro(CampoMinado entrada)
         {
             string[] linhas = entrada.Tabuleiro.Split("\n");
@@ -23,7 +24,7 @@ namespace Ivory.TesteEstagio.CampoMinado
             }
         }
 
-        public int Jogada(CampoMinado entrada)
+        public int Decisao(CampoMinado entrada)
         {
             SepararTabuleiro(entrada);
 
@@ -36,8 +37,8 @@ namespace Ivory.TesteEstagio.CampoMinado
                     {
                         if (JogadaEncimaDosZeros(x, y))
                         {
-                            //como os indices da matriz não batem com a jogada real que se deseja fazer é preciso acresentar.
-                            entrada.Abrir(x + 1, y + 1);
+                            // Como os indices da matriz não batem com a jogada real que se deseja fazer é preciso acresentar o valor 1.
+                            entrada.Abrir((x + 1), (y + 1));
                         }
                     }
                 }
@@ -50,11 +51,12 @@ namespace Ivory.TesteEstagio.CampoMinado
                 {
                     if (tabuleiro[x, y].Equals("-"))
                     {
-                        if (SuporPossivelBomba(x, y))
+                        if (PossivelBomba(x, y))
                         {
-                            // apos feita a verificação com as informações presentes no tabueiro é marcado
+                            // Apos feita a verificação com as informações presentes no tabueiro é marcado
                             // onde possivelmente tem uma bomba, sem abrir a casa em que questão.
                             tabuleiro[x, y] = "*";
+                            
                         }
                     }
                 }
@@ -91,20 +93,25 @@ namespace Ivory.TesteEstagio.CampoMinado
 
         }
 
-
+        // Este metodo verifica se todas as casas ao redor da que se deseja abrir são zeros, esta é a jogada obvia.
         public bool JogadaEncimaDosZeros(int x, int y)
         {
-            // casa ao redor da que se deseja abrir
-            bool acimaEsquerda = false, acima = false, acimaDireita = false;
-            bool esquerda = false, direita = false;
-            bool abaixoEsquerda = false, abaixo = false, abaixoDireita = false;
+            // Casas ao redor da que se deseja abrir.
+            var acimaEsquerda = false;
+            var acima = false;
+            var acimaDireita = false;
+            var esquerda = false;
+            var direita = false;
+            var abaixoEsquerda = false;
+            var abaixo = false;
+            var abaixoDireita = false;
+            var resposta = false;
 
-            bool resposta = false;
 
-            // acima na esquerda
-            if (x - 1 > -1 && y - 1 > -1)
+            // Acima na esquerda.
+            if  (((x - 1) > -1) && ((y - 1) > -1))
             {
-                if (tabuleiro[x - 1, y - 1].Equals("0"))
+                if (tabuleiro[(x - 1), (y - 1)].Equals("0"))
                 {
                     acimaEsquerda = true;
                 }
@@ -112,10 +119,10 @@ namespace Ivory.TesteEstagio.CampoMinado
             else acimaEsquerda = true;
 
 
-            // acima
-            if (x - 1 > -1)
+            // Acima.
+            if ((x - 1) > -1)
             {
-                if (tabuleiro[x - 1, y].Equals("0"))
+                if (tabuleiro[(x - 1), y].Equals("0"))
                 {
                     acima = true;
                 }
@@ -123,10 +130,10 @@ namespace Ivory.TesteEstagio.CampoMinado
             else acima = true;
 
 
-            // acima na direita
-            if (x - 1 > -1 && y + 1 < 9)
+            // Acima na direita.
+            if (((x - 1) > -1) && ((y + 1) < 9))
             {
-                if (tabuleiro[x - 1, y + 1].Equals("0"))
+                if (tabuleiro[(x - 1), (y + 1)].Equals("0"))
                 {
                     acimaDireita = true;
                 }
@@ -135,10 +142,10 @@ namespace Ivory.TesteEstagio.CampoMinado
             else acimaDireita = true;
 
 
-            // esquerda
-            if (y - 1 > -1)
+            // Esquerda.
+            if ((y - 1) > -1)
             {
-                if (tabuleiro[x, y - 1].Equals("0"))
+                if (tabuleiro[x, (y - 1)].Equals("0"))
                 {
                     esquerda = true;
                 }
@@ -146,10 +153,10 @@ namespace Ivory.TesteEstagio.CampoMinado
             else esquerda = true;
 
 
-            // direita
-            if (y + 1 < 9)
+            // Direita.
+            if ((y + 1) < 9)
             {
-                if (tabuleiro[x, y + 1].Equals("0"))
+                if (tabuleiro[x, (y + 1)].Equals("0"))
                 {
                     direita = true;
                 }
@@ -157,10 +164,10 @@ namespace Ivory.TesteEstagio.CampoMinado
             else direita = true;
 
 
-            // abaixo na esquerda
-            if (x + 1 < 9 && y - 1 > -1)
+            // Abaixo na esquerda.
+            if (((x + 1) < 9) && ((y - 1) > -1))
             {
-                if (tabuleiro[x + 1, y - 1].Equals("0"))
+                if (tabuleiro[(x + 1), (y - 1)].Equals("0"))
                 {
                     abaixoEsquerda = true;
                 }
@@ -168,10 +175,10 @@ namespace Ivory.TesteEstagio.CampoMinado
             else abaixoEsquerda = true;
 
 
-            // abaixo
-            if (x + 1 < 9)
+            // Abaixo.
+            if ((x + 1) < 9)
             {
-                if (tabuleiro[x + 1, y].Equals("0"))
+                if (tabuleiro[(x + 1), y].Equals("0"))
                 {
                     abaixo = true;
                 }
@@ -179,10 +186,10 @@ namespace Ivory.TesteEstagio.CampoMinado
             else abaixo = true;
 
 
-            // abaixo na direita
-            if (x + 1 < 9 && y + 1 < 9)
+            // Abaixo na direita.
+            if (((x + 1) < 9) && ((y + 1) < 9))
             {
-                if (tabuleiro[x + 1, y + 1].Equals("0"))
+                if (tabuleiro[(x + 1), (y + 1)].Equals("0"))
                 {
                     abaixoDireita = true;
                 }
@@ -198,102 +205,97 @@ namespace Ivory.TesteEstagio.CampoMinado
         }
 
 
-        // esse metodo vai verificar se alguma das casa ao redor confirmam
-        // que a casa em questão é uma possivel bomba e então gravar uma marcação
-        // ele pega a cada uma das casa ao redor e 
-        public bool SuporPossivelBomba(int x, int y)
+        // Este metodo verifica se alguma das casas ao redor da selecionada possuem informações de que ela é uma bomba.
+        public bool PossivelBomba(int x, int y)
         {
-            // casa ao redor da que se deseja olhar
-            bool acimaEsquerda = false, acima = false, acimaDireita = false;
-            bool esquerda = false, direita = false;
-            bool abaixoEsquerda = false, abaixo = false, abaixoDireita = false;
+            // Casas ao redor da que se desconfia ser uma bomba.
+            var acimaEsquerda = false;
+            var acima = false;
+            var acimaDireita = false;
+            var esquerda = false;
+            var direita = false;
+            var abaixoEsquerda = false;
+            var abaixo = false;
+            var abaixoDireita = false;
+            var resposta = false;
 
-            bool resposta = false;
 
-            // acima na esquerda
+            // Acima na esquerda.
             if (((x - 1) > -1) && ((y - 1) > -1))
             {
-                if (ConfirmarBomba((x - 1), (y - 1)))
+                if (ContaBomba((x - 1), (y - 1)))
                 {
-                    //tabuleiro[x, y] = "*";
                     acimaEsquerda = true;
                 }
             }
             else acimaEsquerda = false;
 
-            // acima
-            if (x - 1 > -1)
+            // Acima.
+            if ((x - 1) > -1)
             {
-                if (ConfirmarBomba((x - 1), y))
+                if (ContaBomba((x - 1), y))
                 {
-                    //tabuleiro[x, y] = "*";
                     acima = true;
                 }
             }
             else acima = false;
 
 
-            // acima na direita
-            if (x - 1 > -1 && y + 1 < 9)
+            // Acima na direita.
+            if (((x - 1) > -1) && ((y + 1) < 9))
             {
-                if (ConfirmarBomba(x - 1, y + 1))
+                if (ContaBomba((x - 1), (y + 1)))
                 {
-                    //tabuleiro[x, y] = "*";
                     abaixoDireita = true;
                 }
             }
             else acimaDireita = false;
 
-            // esquerda
-            if (y - 1 > -1)
+            // Esquerda.
+            if ((y - 1) > -1)
             {
-                if (ConfirmarBomba(x, y - 1))
+                if (ContaBomba(x, (y - 1)))
                 {
-                    //tabuleiro[x, y] = "*";
                     esquerda = true;
                 }
             }
             else esquerda = false;
 
-            // direita
-            if (y + 1 < 9)
+            // Direita.
+            if ((y + 1) < 9)
             {
-                if (ConfirmarBomba(x, y + 1))
+                if (ContaBomba(x, y + 1))
                 {
-                    //tabuleiro[x, y] = "*";
                     direita = true;
                 }
             }
             else direita = false;
 
-            // abaixo na esquerda
-            if (x + 1 < 9 && y - 1 > -1)
+            // Abaixo na esquerda.
+            if (((x + 1) < 9) && ((y - 1) > -1))
             {
-                if (ConfirmarBomba(x + 1, y - 1))
+                if (ContaBomba((x + 1), (y - 1)))
                 {
-                    tabuleiro[x, y] = "*";
                     abaixoEsquerda = true;
                 }
             }
             else abaixoEsquerda = false;
 
-            // abaixo
-            if (x + 1 < 9)
+            // Abaixo.
+            if ((x + 1) < 9)
             {
-                if (ConfirmarBomba(x + 1, y))
+                if (ContaBomba((x + 1), y))
                 {
-                    //tabuleiro[x, y] = "*";
                     abaixo = true;
                 }
             }
             else abaixo = false;
 
-            // abaixo na direita
+            // Abaixo na direita.
             if (x + 1 < 9 && y + 1 < 9)
             {
-                if (ConfirmarBomba(x + 1, y + 1))
+                if (ContaBomba((x + 1), (y + 1)))
                 {
-                    //tabuleiro[x, y] = "*";
                     abaixoDireita = true;
                 }
             }
@@ -307,21 +309,23 @@ namespace Ivory.TesteEstagio.CampoMinado
             return resposta;
         }
 
-        public bool ConfirmarBomba(int x, int y)
+        // Este metodo recebe cada uma das casas que estão ao redor da que se desconfia ser uma bomba, verifica se ja foi aberta,
+        // e caso sim verifica se as bombas que ela diz existir ao seu redor ja foram encontradas, se não foram e o numero de casas por abrir
+        // for o valor presente nele sinaliza que todas elas são bombas.
+        public bool ContaBomba(int x, int y)
         {
-            bool resposta = false;
+            var resposta = false;
+            var contador = 0;
+            var qtdBombas = -1;
 
-            int contador = 0;
-            int qtdBombas = -1;
-
-
+            
             if ((!tabuleiro[x, y].Equals("-")) && (!tabuleiro[x, y].Equals("*")) && (!tabuleiro[x, y].Equals("A")))
             {
                 qtdBombas = int.Parse(tabuleiro[x, y]);
             }
 
 
-            // acima na esquerda
+            // Acima na esquerda.
             if (((x - 1) > -1) && ((y - 1) > -1))
             {
                 if ((tabuleiro[(x - 1), (y - 1)].Equals("-")) || (tabuleiro[(x - 1), (y - 1)].Equals("*")))
@@ -331,7 +335,7 @@ namespace Ivory.TesteEstagio.CampoMinado
             }
 
 
-            // acima
+            // Acima.
             if ((x - 1) > -1)
             {
                 if ((tabuleiro[(x - 1), y].Equals("-")) || (tabuleiro[(x - 1), y].Equals("*")))
@@ -341,7 +345,7 @@ namespace Ivory.TesteEstagio.CampoMinado
             }
 
 
-            // acima na direita
+            // Acima na direita.
             if (((x - 1) > -1) && ((y + 1) < 9))
             {
                 if ((tabuleiro[(x - 1), (y + 1)].Equals("-")) || (tabuleiro[(x - 1), (y + 1)].Equals("*")))
@@ -350,7 +354,8 @@ namespace Ivory.TesteEstagio.CampoMinado
                 }
             }
 
-            // esquerda
+
+            // Esquerda.
             if ((y - 1) > -1)
             {
                 if ((tabuleiro[x, (y - 1)].Equals("-")) || (tabuleiro[x, (y - 1)].Equals("*")))
@@ -360,7 +365,7 @@ namespace Ivory.TesteEstagio.CampoMinado
             }
 
 
-            // direita
+            // Direita.
             if ((y + 1) < 9)
             {
                 if ((tabuleiro[x, (y + 1)].Equals("-")) || (tabuleiro[x, (y + 1)].Equals("*")))
@@ -369,7 +374,8 @@ namespace Ivory.TesteEstagio.CampoMinado
                 }
             }
 
-            // abaixo na esquerda
+
+            // Abaixo na esquerda.
             if (((x + 1) < 9) && ((y - 1) > -1))
             {
                 if ((tabuleiro[(x + 1), (y - 1)].Equals("-")) || (tabuleiro[(x + 1), (y - 1)].Equals("*")))
@@ -378,7 +384,8 @@ namespace Ivory.TesteEstagio.CampoMinado
                 }
             }
 
-            // abaixo
+
+            // Abaixo.
             if ((x + 1) < 9)
             {
                 if ((tabuleiro[(x + 1), y].Equals("-")) || (tabuleiro[(x + 1), y].Equals("*")))
@@ -387,7 +394,8 @@ namespace Ivory.TesteEstagio.CampoMinado
                 }
             }
 
-            // abaixo na direita
+
+            // Abaixo na direita.
             if (((x + 1) < 9) && ((y + 1) < 9))
             {
                 if ((tabuleiro[(x + 1), (y + 1)].Equals("-")) || (tabuleiro[(x + 1), (y + 1)].Equals("*")))
@@ -395,6 +403,7 @@ namespace Ivory.TesteEstagio.CampoMinado
                     contador++;
                 }
             }
+
 
             if (contador == qtdBombas)
             {
@@ -404,89 +413,95 @@ namespace Ivory.TesteEstagio.CampoMinado
             return resposta;
         }
 
+        // Este metodo verifica se alguma das casas ao redor da selecionada possuem informações de que ela pode ser aberta.
         public bool VerificarAberturaDeCasa(int x, int y)
         {
-            // casa ao redor da que se deseja verificar antes de abrir
-            bool acimaEsquerda = false, acima = false, acimaDireita = false;
-            bool esquerda = false, direita = false;
-            bool abaixoEsquerda = false, abaixo = false, abaixoDireita = false;
+            // Casas ao redor da que se deseja abrir.
+            var acimaEsquerda = false;
+            var acima = false;
+            var acimaDireita = false;
+            var esquerda = false;
+            var direita = false;
+            var abaixoEsquerda = false;
+            var abaixo = false;
+            var abaixoDireita = false;
+            var resposta = false;
 
-            bool resposta = false;
 
-            // acima na esquerda
+            // Acima na esquerda.
             if (((x - 1) > -1) && ((y - 1) > -1))
             {
-                if (ConfirmarAberturaDeCasa((x - 1), (y - 1)))
+                if (ConfirmaAberturaDeCasa((x - 1), (y - 1)))
                 {
                     acimaEsquerda = true;
                 }
             }
 
 
-            // acima
+            // Acima.
             if ((x - 1) > -1)
             {
-                if (ConfirmarAberturaDeCasa((x - 1), y))
+                if (ConfirmaAberturaDeCasa((x - 1), y))
                 {
                     acima = true;
                 }
             }
 
 
-            // acima na direita
+            // Acima na direita.
             if (((x - 1) > -1) && ((y + 1) < 9))
             {
-                if (ConfirmarAberturaDeCasa((x - 1), (y + 1)))
+                if (ConfirmaAberturaDeCasa((x - 1), (y + 1)))
                 {
                     acimaDireita = true;
                 }
             }
 
 
-            // esquerda
+            // Esquerda.
             if ((y - 1) > -1)
             {
-                if (ConfirmarAberturaDeCasa(x, (y - 1)))
+                if (ConfirmaAberturaDeCasa(x, (y - 1)))
                 {
                     esquerda = true;
                 }
             }
 
 
-            // direita
+            // Direita.
             if ((y + 1) < 9)
             {
-                if (ConfirmarAberturaDeCasa(x, (y + 1)))
+                if (ConfirmaAberturaDeCasa(x, (y + 1)))
                 {
                     direita = true;
                 }
             }
 
 
-            // abaixo na esquerda
+            // Abaixo na esquerda.
             if (((x + 1) < 9) && ((y - 1) > -1))
             {
-                if (ConfirmarAberturaDeCasa((x + 1), (y - 1)))
+                if (ConfirmaAberturaDeCasa((x + 1), (y - 1)))
                 {
                     abaixoEsquerda = true;
                 }
             }
 
 
-            // abaixo
+            // Abaixo.
             if ((x + 1) < 9)
             {
-                if (ConfirmarAberturaDeCasa((x + 1), y))
+                if (ConfirmaAberturaDeCasa((x + 1), y))
                 {
                     abaixo = true;
                 }
             }
 
 
-            //abaixo na direita
+            // Abaixo na direita.
             if (((x + 1) < 9) && ((y + 1) < 9))
             {
-                if (ConfirmarAberturaDeCasa((x + 1), (y + 1)))
+                if (ConfirmaAberturaDeCasa((x + 1), (y + 1)))
                 {
                     abaixoDireita = true;
                 }
@@ -500,12 +515,15 @@ namespace Ivory.TesteEstagio.CampoMinado
             return resposta;
         }
 
-        public bool ConfirmarAberturaDeCasa(int x, int y)
-        {
-            bool resposta = false;
 
-            int contador = 0;
-            int qtdBombas = -1;
+        // Este metodo recebe cada uma das casas que estão ao redor da que se deseja abrir, verifica se ja foi aberta,
+        // e caso sim verifica se as bombas que ela diz existir ao seu redor ja foram encontradas, se sim isso sinaliza
+        // que a casa sejada ser aberta não possui bomba.
+        public bool ConfirmaAberturaDeCasa(int x, int y)
+        {
+            var resposta = false;
+            var contador = 0;
+            var qtdBombas = -1;
 
 
             if ((!tabuleiro[x, y].Equals("-")) && (!tabuleiro[x, y].Equals("*")) && (!tabuleiro[x, y].Equals("A")))
@@ -514,7 +532,7 @@ namespace Ivory.TesteEstagio.CampoMinado
             }
 
 
-            // acima na esquerda
+            // Acima na esquerda.
             if (((x - 1) > -1) && ((y - 1) > -1))
             {
                 if (tabuleiro[(x - 1), (y - 1)].Equals("*"))
@@ -524,7 +542,7 @@ namespace Ivory.TesteEstagio.CampoMinado
             }
 
 
-            // acima
+            // Acima.
             if ((x - 1) > -1)
             {
                 if (tabuleiro[(x - 1), y].Equals("*"))
@@ -534,7 +552,7 @@ namespace Ivory.TesteEstagio.CampoMinado
             }
 
 
-            // acima na direita
+            // Acima na direita.
             if (((x - 1) > -1) && ((y + 1) < 9))
             {
                 if (tabuleiro[(x - 1), (y + 1)].Equals("*"))
@@ -544,7 +562,7 @@ namespace Ivory.TesteEstagio.CampoMinado
             }
 
 
-            // esquerda
+            // Esquerda.
             if ((y - 1) > -1)
             {
                 if (tabuleiro[x, (y - 1)].Equals("*"))
@@ -554,7 +572,7 @@ namespace Ivory.TesteEstagio.CampoMinado
             }
 
 
-            // direita
+            // Direita.
             if ((y + 1) < 9)
             {
                 if (tabuleiro[x, (y + 1)].Equals("*"))
@@ -564,7 +582,7 @@ namespace Ivory.TesteEstagio.CampoMinado
             }
 
 
-            // abaixo na esquerda
+            // Abaixo na esquerda.
             if (((x + 1) < 9) && ((y - 1) > -1))
             {
                 if (tabuleiro[(x + 1), (y - 1)].Equals("*"))
@@ -574,7 +592,7 @@ namespace Ivory.TesteEstagio.CampoMinado
             }
 
 
-            // abaixo
+            // Abaixo.
             if ((x + 1) < 9)
             {
                 if (tabuleiro[(x + 1), y].Equals("*"))
@@ -584,7 +602,7 @@ namespace Ivory.TesteEstagio.CampoMinado
             }
 
 
-            // abaixo na direita
+            // Abaixo na direita.
             if (((x + 1) < 9) && ((y + 1) < 9))
             {
                 if (tabuleiro[(x + 1), (y + 1)].Equals("*"))

@@ -14,23 +14,16 @@ namespace Ivory.TesteEstagio.CampoMinado
             // Realize sua codificação a partir deste ponto, boa sorte!
 
             int statusJogo;
-
-            Jogadas jogada = new Jogadas();
-
-
+            var escolha = new Jogada();
 
 
             do
             {
                 Console.WriteLine("\nAgurdando a proxima jogada");
-
-                // gerar uma pausa entra cada cada jogada
                 Thread.Sleep(1000);
-
-                statusJogo = jogada.Jogada(campoMinado);
+                statusJogo = escolha.Decisao(campoMinado);
 
             } while (statusJogo == 0);
-
         }
     }
 }
