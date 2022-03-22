@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Ivory.TesteEstagio.CampoMinado
 {
-    class Jogada
+    public class Jogada
     {
         // Variavel para armazenar o tabuleiro em forma de matriz depois de tratado.
         private string[,] tabuleiro = new string[9, 9];
